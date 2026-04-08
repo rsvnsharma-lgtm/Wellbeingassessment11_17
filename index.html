@@ -139,9 +139,7 @@
   .footer-brand img{height:28px;object-fit:contain;opacity:.6;}
   .footer-brand span{font-size:11px;color:#8A9BBF;}
 
-  .swap-note{background:#EEF2F8;border:1px solid #C8D6E8;border-radius:10px;padding:12px 14px;font-size:12px;color:#5A6A88;line-height:1.6;margin-bottom:12px;}
-  .swap-note strong{color:#1A2540;}
-  .swap-note code{font-size:11px;background:#D8E3F0;padding:1px 5px;border-radius:4px;color:#1B4B8A;}
+
   .disclaimer{font-size:11px;color:#8A9BBF;text-align:center;line-height:1.6;padding:10px 4px;}
   canvas#radar{display:block;margin:0 auto;}
 </style>
@@ -175,12 +173,8 @@
     <p style="font-size:12px;color:#5A6A88;margin-bottom:16px;line-height:1.65;">Your answers are private. There are no right or wrong answers — just be honest with yourself.</p>
     <button class="btn btn-primary" onclick="startTest()">Begin check-in →</button>
   </div>
-  <div class="swap-note">
-    <strong>SDQ-ready architecture</strong><br>
-    This tool uses an SDQ-aligned 5-scale structure. To swap in official SDQ questions once licensed from YouthinMind, replace only the <code>QUESTION_BANK</code> array in <code>app.js</code>. Scoring, banding, reports, and PDF all update automatically.
-  </div>
   <p class="disclaimer">For wellbeing awareness only. Not a clinical diagnosis. If you need immediate support, please speak to a trusted adult or counsellor.</p>
-  <div class="footer-brand"><img src="assets/logo_navy.png" alt="Mhitr"/><span>© 2025 Mhitr · Your self-care companion</span></div>
+  <div class="footer-brand"><img src="assets/logo_navy.png" alt="Mhitr"/><span id="footer-year-welcome"></span></div>
 </div>
 
 <!-- SCREEN 2: Questions -->
@@ -251,7 +245,7 @@
   <button class="btn btn-secondary" onclick="restart()" style="margin-top:10px;">Take the check-in again</button>
 
   <p class="disclaimer" style="margin-top:12px;">Scores use SDQ-aligned thresholds (Close to normal / Some risk / High risk). This is a wellbeing awareness tool, not a clinical diagnosis. If concerned, please speak to a school counsellor or trusted adult.</p>
-  <div class="footer-brand"><img src="assets/logo_navy.png" alt="Mhitr"/><span>© 2025 Mhitr · Your self-care companion</span></div>
+  <div class="footer-brand"><img src="assets/logo_navy.png" alt="Mhitr"/><span id="footer-year-report"></span></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
