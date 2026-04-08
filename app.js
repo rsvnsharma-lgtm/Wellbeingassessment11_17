@@ -247,11 +247,7 @@ async function buildReport() {
 
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-  'Content-Type': 'application/json',
-  'x-api-key': 'YOUR_API_KEY_HERE',
-  'anthropic-version': '2023-06-01'
-},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 450,
@@ -471,4 +467,14 @@ function show(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
+
+function setFooters() {
+  const year = new Date().getFullYear();
+  const txt = '© ' + year + ' Vasudhaiva Kutumbakam Software Solutions Private Limited';
+  ['footer-year-welcome','footer-year-report'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = txt;
+  });
+}
+document.addEventListener('DOMContentLoaded', setFooters);
 function restart() { currentQ = 0; answers = []; finalScores = {}; finalBands = {}; show('s-welcome'); }
