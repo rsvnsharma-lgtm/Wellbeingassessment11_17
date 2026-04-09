@@ -31,8 +31,19 @@ function validateScores(raw) {
   if (!raw || typeof raw !== 'object') return null;
   const SCALES = ['emotional', 'conduct', 'hyperactivity', 'peer', 'prosocial'];
   for (const scale of SCALES) {
+    if (!(scale in raw)) return null;
     const v = parseInt(raw[scale], 10);
     if (!Number.isFinite(v) || v < 0 || v > 10) return null;
+  }
+  return raw;
+}
+
+function validateBands(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const SCALES = ['emotional', 'conduct', 'hyperactivity', 'peer', 'prosocial'];
+  const VALID = ['close', 'some', 'high'];
+  for (const scale of SCALES) {
+    if (!VALID.includes(raw[scale])) return null;
   }
   return raw;
 }
@@ -123,7 +134,7 @@ export default async function handler(req, res) {
   const age = validateAge(rawAge);
   const gender = ['boy', 'girl', 'non-binary person', 'person'].includes(rawGender) ? rawGender : 'person';
   const scores = validateScores(rawScores);
-  const bands = validateScores(rawBands); // same structure check
+  const bands = validateBands(rawBands);
 
   if (!age) return res.status(400).json({ error: 'Invalid age. Must be 11–17.' });
   if (!scores) return res.status(400).json({ error: 'Invalid scores.' });
