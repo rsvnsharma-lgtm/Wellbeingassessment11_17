@@ -3,228 +3,183 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Mhitr Wellbeing Check-in | Ages 11–17</title>
+<title>Mhitr Wellbeing Check-in | Ages 11-17</title>
 <link rel="icon" type="image/png" href="assets/logo_navy.png"/>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --brand:#1B4B8A;--brand2:#2D7D5A;
-    --brand-light:#E8F0FA;--brand-mid:#8BA9D4;
-    --teal:#0F6E56;--teal-light:#E1F5EE;
-    --amber:#854F0B;--amber-light:#FAEEDA;
-    --red:#A32D2D;--red-light:#FCEBEB;
-    --green:#3B6D11;--green-light:#EAF3DE;
-    --r:14px;
-  }
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F4FA;color:#1A2540;min-height:100vh;}
-
-  /* NAV */
-  .navbar{
-    background:#fff;border-bottom:1px solid #D8E3F0;
-    padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;
-    position:sticky;top:0;z-index:100;
-  }
-  .nav-logo{display:flex;align-items:center;gap:10px;}
-  .nav-logo img{height:40px;object-fit:contain;}
-  .nav-tag{font-size:12px;font-weight:600;color:var(--brand);background:var(--brand-light);padding:3px 10px;border-radius:99px;border:1px solid var(--brand-mid);}
-
-  /* SCREENS */
-  .screen{display:none;padding:24px 16px 40px;max-width:640px;margin:0 auto;}
-  .screen.active{display:block;}
-
-  /* HERO */
-  .hero{
-    background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
-    border-radius:var(--r);padding:32px 24px 24px;color:#fff;text-align:center;margin-bottom:16px;
-  }
-  .hero-logo{height:60px;object-fit:contain;margin-bottom:14px;}
-  .hero h1{font-size:22px;font-weight:700;margin-bottom:8px;}
-  .hero p{font-size:13px;opacity:.9;line-height:1.7;}
-
-  .card{background:#fff;border:1px solid #D8E3F0;border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:0 2px 12px rgba(27,75,138,.06);}
-  .card h3{font-size:15px;font-weight:600;margin-bottom:14px;color:#1A2540;}
-
-  label{display:block;font-size:12px;font-weight:600;color:#5A6A88;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
-  input[type=text],select{
-    width:100%;padding:10px 14px;border:1.5px solid #C8D6E8;border-radius:8px;
-    font-size:14px;color:#1A2540;background:#fff;outline:none;transition:border-color .2s;
-  }
-  input:focus,select:focus{border-color:var(--brand);}
-
-  .btn{width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;}
-  .btn:active{transform:scale(.98);}
-  .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 4px 16px rgba(27,75,138,.25);}
-  .btn-primary:hover{box-shadow:0 6px 24px rgba(27,75,138,.35);}
-  .btn-secondary{background:var(--brand-light);color:var(--brand);margin-top:10px;}
-  .btn-sm{padding:9px 16px;width:auto;font-size:13px;}
-
-  /* PROGRESS */
-  .prog-wrap{background:#D8E3F0;border-radius:99px;height:6px;margin-bottom:18px;overflow:hidden;}
-  .prog-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s ease;}
-
-  /* QUESTION */
-  .scale-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:11px;font-weight:600;margin-bottom:14px;}
-  .q-text{font-size:18px;font-weight:600;line-height:1.55;margin-bottom:22px;color:#1A2540;}
-  .opts{display:flex;gap:8px;margin-bottom:6px;}
-  .opt{
-    flex:1;padding:14px 6px;border:1.5px solid #D8E3F0;border-radius:12px;
-    text-align:center;cursor:pointer;transition:all .2s;background:#fff;
-  }
-  .opt:hover{border-color:var(--brand);background:var(--brand-light);}
-  .opt.sel{border-color:var(--brand);background:var(--brand-light);}
-  .opt-icon{font-size:22px;display:block;margin-bottom:4px;}
-  .opt-lbl{font-size:11px;color:#5A6A88;}
-  .opt.sel .opt-lbl{color:var(--brand);font-weight:600;}
-  .scale-lbl{display:flex;justify-content:space-between;margin-bottom:6px;}
-  .scale-lbl span{font-size:11px;color:#8A9BBF;}
-  .nav-row{display:flex;gap:8px;margin-top:16px;}
-  .nav-row .btn{flex:1;}
-  .nav-row .btn:first-child{flex:.35;}
-
-  /* LOADING */
-  .loading-wrap{text-align:center;padding:56px 20px;}
-  .loading-logo{height:52px;object-fit:contain;margin-bottom:20px;opacity:.85;}
-  .spinner{width:48px;height:48px;border:3px solid var(--brand-light);border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 18px;}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .dots span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--brand);margin:0 3px;animation:bop .7s ease-in-out infinite;}
-  .dots span:nth-child(2){animation-delay:.15s;}
-  .dots span:nth-child(3){animation-delay:.3s;}
-  @keyframes bop{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
-
-  /* REPORT */
-  .report-header{
-    background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
-    border-radius:var(--r);padding:28px 24px;color:#fff;margin-bottom:14px;
-    display:flex;align-items:center;gap:18px;
-  }
-  .report-logo{height:52px;object-fit:contain;}
-  .rpt-text{flex:1;}
-  .rpt-text h2{font-size:20px;font-weight:700;margin-bottom:4px;}
-  .rpt-text p{font-size:12px;opacity:.85;}
-
-  .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8A9BBF;margin-bottom:12px;}
-  .score-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #EEF2F8;}
-  .score-row:last-child{border-bottom:none;}
-  .score-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0;}
-  .score-meta{flex:1;min-width:0;}
-  .score-name{font-size:13px;font-weight:600;}
-  .bar-wrap{flex:1;background:#EEF2F8;border-radius:99px;height:5px;overflow:hidden;margin-top:5px;}
-  .bar-fill{height:100%;border-radius:99px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
-  .score-val{font-size:13px;font-weight:600;min-width:32px;text-align:right;}
-  .band-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;margin-left:6px;}
-  .band-low{background:#EAF3DE;color:#3B6D11;}
-  .band-med{background:#FAEEDA;color:#854F0B;}
-  .band-high{background:#FCEBEB;color:#A32D2D;}
-
-  .insight-box{background:var(--brand-light);border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;line-height:1.75;color:#1A2540;}
-  .insight-box strong{font-size:12px;font-weight:700;display:block;margin-bottom:6px;color:var(--brand);text-transform:uppercase;letter-spacing:.4px;}
-  .flag{background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:8px;font-size:13px;line-height:1.65;}
-  .flag.urgent{background:var(--red-light);border-color:var(--red);}
-  .flag strong{font-weight:600;display:block;margin-bottom:3px;}
-  .tip-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #EEF2F8;font-size:13px;line-height:1.6;}
-  .tip-row:last-child{border-bottom:none;}
-  .tip-dot{width:6px;height:6px;border-radius:50%;background:var(--brand2);flex-shrink:0;margin-top:5px;}
-
-  .pdf-btn{
-    width:100%;padding:15px;border:none;border-radius:10px;
-    background:linear-gradient(135deg,var(--brand),var(--brand2));
-    color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;
-    box-shadow:0 4px 16px rgba(27,75,138,.25);transition:all .15s;
-    display:flex;align-items:center;justify-content:center;gap:8px;
-  }
-  .pdf-btn:hover{box-shadow:0 6px 24px rgba(27,75,138,.35);}
-  .pdf-btn:active{transform:scale(.98);}
-
-  .footer-brand{display:flex;align-items:center;justify-content:center;gap:10px;padding:20px;margin-top:8px;}
-  .footer-brand img{height:28px;object-fit:contain;opacity:.6;}
-  .footer-brand span{font-size:11px;color:#8A9BBF;}
-
-
-  .disclaimer{font-size:11px;color:#8A9BBF;text-align:center;line-height:1.6;padding:10px 4px;}
-  canvas#radar{display:block;margin:0 auto;}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#1B4B8A;--brand2:#2D7D5A;
+  --brand-light:#E8F0FA;--brand-mid:#8BA9D4;
+  --amber:#854F0B;--amber-light:#FAEEDA;
+  --red:#A32D2D;--red-light:#FCEBEB;
+  --green:#3B6D11;--green-light:#EAF3DE;
+  --r:clamp(10px,2vw,14px);
+  --pad:clamp(12px,4vw,24px);
+}
+html{font-size:16px;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F0F4FA;color:#1A2540;min-height:100vh;-webkit-text-size-adjust:100%;}
+.navbar{background:#fff;border-bottom:1px solid #D8E3F0;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;height:clamp(52px,8vw,64px);position:sticky;top:0;z-index:100;}
+.nav-logo img{height:clamp(30px,5vw,42px);object-fit:contain;display:block;}
+.nav-tag{font-size:clamp(9px,2.3vw,12px);font-weight:600;color:var(--brand);background:var(--brand-light);padding:3px 8px;border-radius:99px;border:1px solid var(--brand-mid);white-space:nowrap;}
+.screen{display:none;padding:clamp(12px,4vw,24px) clamp(12px,4vw,16px) 56px;max-width:680px;margin:0 auto;}
+.screen.active{display:block;}
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);border-radius:var(--r);padding:clamp(20px,5vw,36px) clamp(14px,4vw,28px) clamp(18px,4vw,28px);color:#fff;text-align:center;margin-bottom:clamp(12px,3vw,18px);}
+.hero-logo{height:clamp(38px,8vw,64px);object-fit:contain;margin-bottom:clamp(10px,2vw,16px);display:block;margin-left:auto;margin-right:auto;}
+.hero h1{font-size:clamp(16px,4.5vw,24px);font-weight:700;margin-bottom:clamp(6px,1.5vw,10px);}
+.hero p{font-size:clamp(12px,3vw,14px);opacity:.9;line-height:1.65;}
+.card{background:#fff;border:1px solid #D8E3F0;border-radius:var(--r);padding:clamp(14px,4vw,22px);margin-bottom:clamp(10px,3vw,16px);box-shadow:0 2px 12px rgba(27,75,138,.05);}
+.card h3{font-size:clamp(13px,3.5vw,16px);font-weight:600;margin-bottom:clamp(10px,3vw,16px);color:#1A2540;}
+label{display:block;font-size:clamp(10px,2.5vw,12px);font-weight:700;color:#5A6A88;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+input[type=text],select{width:100%;padding:clamp(11px,3vw,13px) clamp(12px,3vw,16px);border:1.5px solid #C8D6E8;border-radius:8px;font-size:clamp(14px,3.5vw,16px);color:#1A2540;background:#fff;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;min-height:48px;}
+input:focus,select:focus{border-color:var(--brand);}
+.btn{width:100%;padding:clamp(13px,3.5vw,15px);border:none;border-radius:10px;font-size:clamp(14px,3.5vw,16px);font-weight:600;cursor:pointer;transition:all .15s;min-height:48px;touch-action:manipulation;}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 4px 16px rgba(27,75,138,.22);}
+.btn-primary:hover{box-shadow:0 6px 24px rgba(27,75,138,.32);}
+.btn-secondary{background:var(--brand-light);color:var(--brand);margin-top:10px;}
+.btn-sm{padding:clamp(10px,2.5vw,12px) clamp(14px,3vw,18px);width:auto;font-size:clamp(13px,3vw,15px);}
+.prog-wrap{background:#D8E3F0;border-radius:99px;height:5px;margin-bottom:clamp(14px,3vw,20px);overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s ease;}
+.q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(10px,3vw,14px);flex-wrap:wrap;gap:6px;}
+.scale-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;font-size:clamp(10px,2.5vw,12px);font-weight:600;}
+.q-counter{font-size:clamp(11px,2.5vw,13px);color:#8A9BBF;font-weight:600;}
+.q-text{font-size:clamp(15px,4vw,19px);font-weight:600;line-height:1.55;margin-bottom:clamp(16px,4vw,24px);color:#1A2540;}
+.scale-lbl{display:flex;justify-content:space-between;margin-bottom:6px;}
+.scale-lbl span{font-size:clamp(10px,2.5vw,12px);color:#8A9BBF;}
+.opts{display:flex;gap:clamp(6px,2vw,10px);margin-bottom:6px;}
+.opt{flex:1;padding:clamp(12px,3vw,16px) clamp(4px,1.5vw,8px);border:1.5px solid #D8E3F0;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s;background:#fff;min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;touch-action:manipulation;}
+.opt:active,.opt:hover{border-color:var(--brand);background:var(--brand-light);}
+.opt.sel{border-color:var(--brand);background:var(--brand-light);}
+.opt-icon{font-size:clamp(18px,5vw,24px);display:block;margin-bottom:4px;}
+.opt-lbl{font-size:clamp(9px,2.3vw,12px);color:#5A6A88;line-height:1.2;}
+.opt.sel .opt-lbl{color:var(--brand);font-weight:600;}
+@media(max-width:340px){.opts{flex-direction:column;}.opt{min-height:52px;flex-direction:row;gap:12px;padding:12px 14px;text-align:left;justify-content:flex-start;}.opt-icon{margin-bottom:0;}.scale-lbl{display:none;}}
+.nav-row{display:flex;gap:8px;margin-top:clamp(12px,3vw,18px);}
+.nav-row .btn{flex:1;}
+.nav-row .btn:first-child{flex:.38;}
+.loading-wrap{text-align:center;padding:clamp(40px,10vw,64px) clamp(16px,4vw,24px);}
+.loading-logo{height:clamp(40px,8vw,56px);object-fit:contain;margin-bottom:clamp(16px,4vw,24px);opacity:.85;display:block;margin-left:auto;margin-right:auto;}
+.spinner{width:clamp(40px,8vw,52px);height:clamp(40px,8vw,52px);border:3px solid var(--brand-light);border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto clamp(14px,3vw,20px);}
+@keyframes spin{to{transform:rotate(360deg)}}
+.dots span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--brand);margin:0 3px;animation:bop .7s ease-in-out infinite;}
+.dots span:nth-child(2){animation-delay:.15s;}
+.dots span:nth-child(3){animation-delay:.3s;}
+@keyframes bop{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+.load-title{font-size:clamp(14px,3.5vw,16px);font-weight:600;margin-bottom:6px;}
+.load-msg{font-size:clamp(12px,3vw,14px);color:#5A6A88;margin-bottom:clamp(16px,4vw,22px);}
+.report-header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);border-radius:var(--r);padding:clamp(16px,4vw,28px) clamp(14px,4vw,24px);color:#fff;margin-bottom:clamp(10px,3vw,16px);display:flex;align-items:center;gap:clamp(10px,3vw,18px);}
+.report-logo{height:clamp(34px,7vw,54px);object-fit:contain;flex-shrink:0;}
+.rpt-text{flex:1;min-width:0;}
+.rpt-text h2{font-size:clamp(14px,4vw,20px);font-weight:700;margin-bottom:3px;word-break:break-word;}
+.rpt-text p{font-size:clamp(10px,2.5vw,12px);opacity:.85;}
+.rpt-icon{font-size:clamp(22px,6vw,38px);flex-shrink:0;}
+.section-title{font-size:clamp(9px,2.5vw,11px);font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8A9BBF;margin-bottom:clamp(8px,2vw,14px);}
+.score-row{display:flex;align-items:center;gap:clamp(8px,2vw,14px);padding:clamp(8px,2vw,13px) 0;border-bottom:1px solid #EEF2F8;}
+.score-row:last-child{border-bottom:none;}
+.score-icon{font-size:clamp(15px,4vw,20px);width:clamp(22px,4vw,28px);text-align:center;flex-shrink:0;}
+.score-meta{flex:1;min-width:0;}
+.score-name{font-size:clamp(11px,3vw,13px);font-weight:600;display:flex;align-items:center;flex-wrap:wrap;gap:4px;}
+.bar-wrap{background:#EEF2F8;border-radius:99px;height:5px;overflow:hidden;margin-top:5px;}
+.bar-fill{height:100%;border-radius:99px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.score-val{font-size:clamp(11px,3vw,13px);font-weight:600;min-width:30px;text-align:right;flex-shrink:0;}
+.band-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:clamp(9px,2.3vw,11px);font-weight:600;}
+.band-low{background:#EAF3DE;color:#3B6D11;}
+.band-med{background:#FAEEDA;color:#854F0B;}
+.band-high{background:#FCEBEB;color:#A32D2D;}
+#radar-wrap{width:100%;max-width:280px;margin:0 auto clamp(12px,3vw,18px);}
+canvas#radar{width:100%;height:auto;display:block;}
+.insight-box{background:var(--brand-light);border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:clamp(10px,3vw,14px) clamp(12px,3vw,16px);margin-bottom:10px;font-size:clamp(12px,3vw,14px);line-height:1.75;color:#1A2540;}
+.insight-box strong{font-size:clamp(10px,2.5vw,12px);font-weight:700;display:block;margin-bottom:5px;color:var(--brand);text-transform:uppercase;letter-spacing:.4px;}
+.flag{background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:clamp(10px,3vw,13px) clamp(12px,3vw,15px);margin-bottom:8px;font-size:clamp(12px,3vw,14px);line-height:1.65;}
+.flag.urgent{background:var(--red-light);border-color:var(--red);}
+.flag strong{font-weight:600;display:block;margin-bottom:3px;}
+.tip-row{display:flex;align-items:flex-start;gap:10px;padding:clamp(7px,2vw,10px) 0;border-bottom:1px solid #EEF2F8;font-size:clamp(12px,3vw,14px);line-height:1.6;}
+.tip-row:last-child{border-bottom:none;}
+.tip-dot{width:6px;height:6px;border-radius:50%;background:var(--brand2);flex-shrink:0;margin-top:5px;}
+.pdf-btn{width:100%;padding:clamp(13px,3.5vw,16px);border:none;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-size:clamp(14px,3.5vw,16px);font-weight:600;cursor:pointer;margin-top:clamp(12px,3vw,18px);box-shadow:0 4px 16px rgba(27,75,138,.22);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;touch-action:manipulation;}
+.pdf-btn:active{transform:scale(.98);}
+.footer-brand{display:flex;align-items:center;justify-content:center;gap:8px;padding:clamp(14px,4vw,22px);margin-top:8px;flex-wrap:wrap;text-align:center;}
+.footer-brand img{height:clamp(20px,4vw,28px);object-fit:contain;opacity:.55;}
+.footer-brand span{font-size:clamp(9px,2.3vw,11px);color:#8A9BBF;line-height:1.5;}
+.disclaimer{font-size:clamp(10px,2.5vw,12px);color:#8A9BBF;text-align:center;line-height:1.6;padding:clamp(8px,2vw,12px) 4px;}
+@media(min-width:540px){.opts{gap:12px;}.opt{min-height:88px;}}
+@media(min-width:768px){.report-header,.card{padding:24px;}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="navbar">
-  <div class="nav-logo">
-    <img src="assets/logo_navy.png" alt="Mhitr logo"/>
-  </div>
-  <span class="nav-tag">Wellbeing Check-in · Ages 11–17</span>
+  <div class="nav-logo"><img src="assets/logo_navy.png" alt="Mhitr"/></div>
+  <span class="nav-tag">Wellbeing Check-in - Ages 11-17</span>
 </nav>
 
-<!-- SCREEN 1: Welcome -->
 <div id="s-welcome" class="screen active">
   <div class="hero">
     <img src="assets/logo_white.png" alt="Mhitr" class="hero-logo"/>
     <h1>How are you really feeling?</h1>
-    <p>A friendly wellbeing check-in across 5 areas — emotions, behaviour, focus, friendships, and kindness. Takes about 5 minutes.</p>
+    <p>A friendly wellbeing check-in across 5 areas - emotions, behaviour, focus, friendships, and kindness. Takes about 5 minutes.</p>
   </div>
   <div class="card">
     <h3>A little about you</h3>
-    <div style="margin-bottom:12px"><label>Your first name</label><input type="text" id="inp-name" placeholder="e.g. Aryan" maxlength="30"/></div>
-    <div style="margin-bottom:12px"><label>Your age</label>
+    <div style="margin-bottom:14px"><label>Your first name</label><input type="text" id="inp-name" placeholder="e.g. Aryan" maxlength="30" autocomplete="given-name"/></div>
+    <div style="margin-bottom:14px"><label>Your age</label>
       <select id="inp-age"><option value="">Select age</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option></select>
     </div>
-    <div style="margin-bottom:18px"><label>I am a</label>
+    <div style="margin-bottom:20px"><label>I am a</label>
       <select id="inp-gender"><option value="person">Prefer not to say</option><option value="boy">Boy</option><option value="girl">Girl</option><option value="non-binary person">Non-binary person</option></select>
     </div>
-    <p style="font-size:12px;color:#5A6A88;margin-bottom:16px;line-height:1.65;">Your answers are private. There are no right or wrong answers — just be honest with yourself.</p>
-    <button class="btn btn-primary" onclick="startTest()">Begin check-in →</button>
+    <p style="font-size:clamp(11px,2.8vw,13px);color:#5A6A88;margin-bottom:clamp(12px,3vw,18px);line-height:1.65;">Your answers are private. There are no right or wrong answers - just be honest with yourself.</p>
+    <button class="btn btn-primary" onclick="startTest()">Begin check-in</button>
   </div>
   <p class="disclaimer">For wellbeing awareness only. Not a clinical diagnosis. If you need immediate support, please speak to a trusted adult or counsellor.</p>
   <div class="footer-brand"><img src="assets/logo_navy.png" alt="Mhitr"/><span id="footer-year-welcome"></span></div>
 </div>
 
-<!-- SCREEN 2: Questions -->
 <div id="s-question" class="screen">
   <div class="prog-wrap"><div class="prog-fill" id="prog" style="width:0%"></div></div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+  <div class="q-meta">
     <div id="scale-chip" class="scale-chip"></div>
-    <span id="q-num" style="font-size:12px;color:#8A9BBF;font-weight:600;"></span>
+    <span class="q-counter" id="q-num"></span>
   </div>
-  <div class="card" style="margin-bottom:12px;">
+  <div class="card" style="margin-bottom:clamp(10px,3vw,14px);">
     <p class="q-text" id="q-text"></p>
     <div class="scale-lbl"><span>Not true</span><span>Somewhat true</span><span>Certainly true</span></div>
     <div class="opts" id="opts-wrap"></div>
   </div>
   <div class="nav-row">
-    <button class="btn btn-secondary btn-sm" id="btn-back" onclick="prevQ()">← Back</button>
-    <button class="btn btn-primary" id="btn-next" onclick="nextQ()">Next →</button>
+    <button class="btn btn-secondary btn-sm" id="btn-back" onclick="prevQ()">Back</button>
+    <button class="btn btn-primary" id="btn-next" onclick="nextQ()">Next</button>
   </div>
 </div>
 
-<!-- SCREEN 3: Loading -->
 <div id="s-loading" class="screen">
   <div class="loading-wrap">
     <img src="assets/logo_navy.png" alt="Mhitr" class="loading-logo"/>
     <div class="spinner"></div>
-    <p style="font-size:15px;font-weight:600;margin-bottom:6px;">Creating your report...</p>
-    <p id="load-msg" style="font-size:13px;color:#5A6A88;margin-bottom:20px;">Calculating scale scores</p>
+    <p class="load-title">Creating your report...</p>
+    <p id="load-msg" class="load-msg">Calculating scale scores</p>
     <div class="dots"><span></span><span></span><span></span></div>
   </div>
 </div>
 
-<!-- SCREEN 4: Report -->
 <div id="s-report" class="screen">
   <div class="report-header">
     <img src="assets/logo_white.png" alt="Mhitr" class="report-logo"/>
     <div class="rpt-text">
       <h2 id="r-title">Wellbeing Report</h2>
-      <p id="r-sub">SDQ-aligned · Powered by Mhitr</p>
+      <p id="r-sub">Powered by Mhitr</p>
     </div>
-    <span id="r-icon" style="font-size:36px;"></span>
+    <span class="rpt-icon" id="r-icon"></span>
   </div>
 
   <div class="card">
     <p class="section-title">Your 5 wellbeing scales</p>
-    <canvas id="radar" width="240" height="240" style="margin-bottom:18px;"></canvas>
+    <div id="radar-wrap"><canvas id="radar" width="280" height="280"></canvas></div>
     <div id="score-list"></div>
   </div>
 
   <div class="card" id="insight-card">
-    <p class="section-title">AI insights · powered by Claude</p>
+    <p class="section-title">Insights</p>
     <div id="insight-body"></div>
   </div>
 
@@ -239,12 +194,12 @@
   </div>
 
   <button class="pdf-btn" onclick="makePDF()">
-    <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
     Download PDF Report
   </button>
   <button class="btn btn-secondary" onclick="restart()" style="margin-top:10px;">Take the check-in again</button>
 
-  <p class="disclaimer" style="margin-top:12px;">Scores use SDQ-aligned thresholds (Close to normal / Some risk / High risk). This is a wellbeing awareness tool, not a clinical diagnosis. If concerned, please speak to a school counsellor or trusted adult.</p>
+  <p class="disclaimer" style="margin-top:14px;">Scores use SDQ-aligned thresholds (Close to normal / Some risk / High risk). This is a wellbeing awareness tool, not a clinical diagnosis. If concerned, please speak to a school counsellor or trusted adult.</p>
   <div class="footer-brand"><img src="assets/logo_navy.png" alt="Mhitr"/><span id="footer-year-report"></span></div>
 </div>
 

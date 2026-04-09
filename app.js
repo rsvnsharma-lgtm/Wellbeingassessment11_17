@@ -463,9 +463,7 @@ function makePDF() {
   });
   y += 4;
 
-  // AI insights
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.setTextColor(27, 75, 138);
-  doc.text('AI Insights (powered by Claude)', M, y); y += 7;
+  // Personalised insights (no heading)
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(40, 52, 90);
   const aiEl = document.getElementById('insight-body');
   const aiRaw = aiEl ? aiEl.innerText.replace(/\n+/g, ' ') : '';
