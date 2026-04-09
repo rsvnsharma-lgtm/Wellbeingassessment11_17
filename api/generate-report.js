@@ -89,6 +89,7 @@ export default async function handler(req, res) {
 
   // CORS — allow your GitHub Pages domain and localhost
   const allowedOrigins = [
+    'https://adolescentwellbeingassessment.vercel.app',
     'https://rsvnsharma-lgtm.github.io',
     'http://localhost:3000',
     'http://127.0.0.1:5500'
